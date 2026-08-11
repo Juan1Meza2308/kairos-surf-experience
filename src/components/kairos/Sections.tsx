@@ -554,10 +554,9 @@ export function Galeria() {
             <X className="size-6" />
           </button>
           <img
-            src={galeria[active].src}
-            alt={galeria[active].alt}
-            className="max-h-[85vh] max-w-full rounded-sm object-contain"
-          />
+            src={galeria[active]!.src}
+            alt={galeria[active]!.alt}
+
         </div>
       ) : null}
     </section>
