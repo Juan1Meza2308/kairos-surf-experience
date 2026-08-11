@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, MessageCircle } from "lucide-react";
 import { Reveal, SectionHeading } from "./Reveal";
+import { PillButton } from "./Pill";
 import { WHATSAPP_NUMBER, instructores, planes } from "./data";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +12,11 @@ const franjas = [
   { id: "atardecer", label: "5:00 – 7:00 p.m.", nota: "Menos viento, atardecer" },
 ];
 
-const niveles = ["Nunca me he subido a una tabla", "Ya me paré alguna vez", "Remo y elijo mis olas"];
+const niveles = [
+  "Nunca me he subido a una tabla",
+  "Ya me paré alguna vez",
+  "Remo y elijo mis olas",
+];
 
 type Datos = {
   plan: string;
@@ -25,8 +30,10 @@ type Datos = {
   notas: string;
 };
 
+/* Los campos de una línea son píldoras; el textarea recupera esquinas de
+   tarjeta más abajo con `rounded-2xl` (tailwind-merge resuelve el conflicto). */
 const inputClass =
-  "w-full rounded-sm border border-input bg-background/60 px-3 py-2.5 text-sm text-cream outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-gold";
+  "w-full rounded-full border border-input bg-background/60 px-4 py-2.5 text-sm text-cream outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-gold";
 
 export function Booking() {
   const [step, setStep] = useState(0);
@@ -92,26 +99,21 @@ export function Booking() {
           intro="No hay pago en línea. Al terminar armamos el mensaje con tus datos y lo abrimos en WhatsApp para confirmar cupo y condiciones del mar de ese día."
         />
 
-        <Reveal className="mt-10 rounded-md border border-border bg-card/80 p-5 shadow-[var(--shadow-soft)] sm:p-8">
-          <ol className="mb-8 flex flex-wrap gap-x-6 gap-y-2">
+        <Reveal className="mt-10 rounded-2xl border border-border bg-card/80 p-5 shadow-[var(--shadow-soft)] sm:p-8">
+          <ol className="mb-8 flex flex-wrap gap-2">
             {steps.map((s, i) => (
               <li
                 key={s}
                 className={cn(
-                  "flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.16em] transition-colors",
-                  i === step ? "text-gold" : i < step ? "text-turquoise" : "text-muted-foreground/60",
+                  "flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[0.68rem] uppercase tracking-[0.14em] transition-colors",
+                  i === step
+                    ? "border-gold text-gold"
+                    : i < step
+                      ? "border-turquoise/50 text-turquoise"
+                      : "border-border text-muted-foreground/60",
                 )}
               >
-                <span
-                  className={cn(
-                    "flex size-5 items-center justify-center rounded-full border text-[0.65rem]",
-                    i === step
-                      ? "border-gold"
-                      : i < step
-                        ? "border-turquoise"
-                        : "border-muted-foreground/40",
-                  )}
-                >
+                <span className="flex size-4 items-center justify-center text-[0.65rem]">
                   {i < step ? <Check className="size-3" /> : i + 1}
                 </span>
                 {s}
@@ -131,7 +133,7 @@ export function Booking() {
                         type="button"
                         onClick={() => set("plan", p.nombre)}
                         className={cn(
-                          "rounded-sm border p-4 text-left transition-all duration-300 hover:-translate-y-0.5",
+                          "rounded-2xl border p-4 text-left transition-all duration-300 hover:-translate-y-0.5",
                           d.plan === p.nombre
                             ? "border-gold bg-gold/10"
                             : "border-border bg-background/40 hover:border-gold/50",
@@ -154,7 +156,7 @@ export function Booking() {
                         type="button"
                         onClick={() => set("instructor", n)}
                         className={cn(
-                          "rounded-sm border px-4 py-3 text-left text-sm transition-all duration-300 hover:-translate-y-0.5",
+                          "rounded-full border px-4 py-3 text-left text-sm transition-all duration-300 hover:-translate-y-0.5",
                           d.instructor === n
                             ? "border-turquoise bg-turquoise/10 text-cream"
                             : "border-border bg-background/40 text-muted-foreground hover:border-turquoise/50",
@@ -196,7 +198,7 @@ export function Booking() {
                         type="button"
                         onClick={() => set("franja", f.label)}
                         className={cn(
-                          "flex w-full items-baseline justify-between gap-3 rounded-sm border px-4 py-3 text-left transition-colors",
+                          "flex w-full items-baseline justify-between gap-3 rounded-full border px-4 py-3 text-left transition-colors",
                           d.franja === f.label
                             ? "border-gold bg-gold/10"
                             : "border-border bg-background/40 hover:border-gold/50",
@@ -248,7 +250,7 @@ export function Booking() {
                         type="button"
                         onClick={() => set("nivel", n)}
                         className={cn(
-                          "w-full rounded-sm border px-4 py-2.5 text-left text-sm transition-colors",
+                          "w-full rounded-full border px-4 py-2.5 text-left text-sm transition-colors",
                           d.nivel === n
                             ? "border-gold bg-gold/10 text-cream"
                             : "border-border bg-background/40 text-muted-foreground hover:border-gold/50",
@@ -284,7 +286,7 @@ export function Booking() {
                       maxLength={400}
                       rows={3}
                       onChange={(e) => set("notas", e.target.value)}
-                      className={cn(inputClass, "resize-none")}
+                      className={cn(inputClass, "resize-none rounded-2xl")}
                     />
                   </div>
                 </div>
@@ -293,7 +295,7 @@ export function Booking() {
 
             {step === 3 ? (
               <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
-                <dl className="divide-y divide-border rounded-sm border border-border bg-background/40 px-4">
+                <dl className="divide-y divide-border rounded-2xl border border-border bg-background/40 px-4">
                   {[
                     ["Plan", d.plan],
                     ["Instructor", d.instructor],
@@ -315,19 +317,20 @@ export function Booking() {
                 </dl>
                 <div className="flex flex-col justify-between gap-5">
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    Al enviar se abre WhatsApp con este mensaje ya escrito. Un instructor te responde
-                    con la disponibilidad real de esa franja y el punto exacto de encuentro. El pago
-                    se hace el mismo día, antes de entrar al agua.
+                    Al enviar se abre WhatsApp con este mensaje ya escrito. Un instructor te
+                    responde con la disponibilidad real de esa franja y el punto exacto de
+                    encuentro. El pago se hace el mismo día, antes de entrar al agua.
                   </p>
-                  <a
+                  <PillButton
                     href={`https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`}
+                    variant="solid"
+                    size="lg"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-sm bg-gold px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-primary-foreground transition-transform duration-300 hover:scale-[1.02] hover:bg-gold-bright"
                   >
                     <MessageCircle className="size-4" />
                     Enviar por WhatsApp
-                  </a>
+                  </PillButton>
                 </div>
               </div>
             ) : null}
@@ -343,14 +346,15 @@ export function Booking() {
               <ArrowLeft className="size-4" /> Atrás
             </button>
             {step < 3 ? (
-              <button
-                type="button"
+              <PillButton
+                variant="outline"
+                size="md"
                 onClick={() => setStep((s) => Math.min(3, s + 1))}
                 disabled={!stepValid}
-                className="inline-flex items-center gap-2 rounded-sm border border-gold px-5 py-2.5 text-sm uppercase tracking-[0.14em] text-gold transition-colors hover:bg-gold hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-35"
+                className="border-gold/60 text-gold hover:bg-gold hover:text-primary-foreground"
               >
                 Continuar <ArrowRight className="size-4" />
-              </button>
+              </PillButton>
             ) : null}
           </div>
         </Reveal>

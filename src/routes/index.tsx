@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/kairos/Nav";
+import { Hero } from "@/components/kairos/Hero";
 import {
   Clase,
   Contacto,
@@ -9,7 +10,6 @@ import {
   Faq,
   Footer,
   Galeria,
-  Hero,
   Instructores,
   Planes,
   Playa,
@@ -32,7 +32,15 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/og.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content: "Surfista tomando una ola de espuma en agua turquesa en Puerto Colombia",
+      },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/og.jpg" },
     ],
     links: [{ rel: "canonical", href: "/" }],
     scripts: [
