@@ -48,7 +48,6 @@ export const Route = createFileRoute("/")({
           areaServed: "Puerto Colombia, Atlántico, Colombia",
           sameAs: ["https://instagram.com/kairossurf.co"],
           slogan: "¡Vive la experiencia de surfear!",
-मैं: undefined,
         }),
       },
     ],
