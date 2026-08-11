@@ -1,6 +1,8 @@
 import { useState, type ReactNode } from "react";
 import { Instagram, MapPin, MessageCircle, Quote, Sunrise, Waves, Wind, X } from "lucide-react";
 import { Reveal, SectionHeading } from "./Reveal";
+import { Chip, IconCircle, PillButton } from "./Pill";
+import { selectPlan } from "./select-plan";
 import {
   INSTAGRAM_URL,
   MAP_EMBED,
@@ -13,15 +15,11 @@ import {
   timeline,
 } from "./data";
 import heroImg from "@/assets/hero-surf.jpg";
+import heroDiaImg from "@/assets/hero-surf-dia.jpg";
 import playaImg from "@/assets/playa-malecon.jpg";
 import yogaImg from "@/assets/yoga-surf.jpg";
 import logo from "@/assets/kairos-logo.jpg";
 import { cn } from "@/lib/utils";
-
-function selectPlan(id: string) {
-  window.dispatchEvent(new CustomEvent("kairos:select-plan", { detail: id }));
-  document.getElementById("reserva")?.scrollIntoView({ behavior: "smooth" });
-}
 
 /* Carrusel táctil en móvil (scroll-snap) que en pantallas grandes se
    convierte en grilla. Reduce drásticamente el scroll vertical en celular. */
@@ -35,69 +33,6 @@ function HScroll({ className, children }: { className?: string; children: ReactN
     >
       {children}
     </div>
-  );
-}
-
-export function Hero() {
-  return (
-    <section
-      id="inicio"
-      className="relative flex min-h-[88vh] items-end overflow-hidden sm:min-h-[92vh]"
-    >
-      <img
-        src={heroImg}
-        alt="Surfista caminando por la orilla con una tabla turquesa al atardecer en Puerto Colombia"
-        width={1920}
-        height={1280}
-        fetchPriority="high"
-        className="absolute inset-0 size-full object-cover"
-      />
-      <div className="absolute inset-0" style={{ background: "var(--gradient-dusk)" }} />
-      <div className="relative mx-auto w-full max-w-6xl px-5 pb-12 pt-24 sm:pb-20 sm:pt-32">
-        <Reveal>
-          <img
-            src={logo}
-            alt="Isotipo de Kairos Surf School: vela dorada sobre círculo verde azulado"
-            width={88}
-            height={88}
-            className="size-16 rounded-full object-cover ring-1 ring-gold/50 sm:size-22"
-          />
-        </Reveal>
-        <Reveal delay={120}>
-          <h1 className="mt-6 max-w-3xl font-display text-[2.4rem] leading-[1.05] text-cream sm:text-6xl md:text-7xl">
-            Clases de surf en Puerto Colombia
-          </h1>
-        </Reveal>
-        <Reveal delay={220}>
-          <p className="mt-4 font-script text-2xl text-gold sm:text-3xl">
-            ¡Vive la experiencia de surfear!
-          </p>
-        </Reveal>
-        <Reveal delay={300}>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-cream/80">
-            Escuela local de surf y paddle en el Atlántico. Clases 100% personalizadas, para todas
-            las edades y niveles. Antes de reservar, aquí te contamos exactamente cómo es el mar, la
-            clase y lo que puedes esperar el primer día.
-          </p>
-        </Reveal>
-        <Reveal delay={380}>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <a
-              href="#reserva"
-              className="rounded-sm bg-gold px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.16em] text-primary-foreground transition-transform duration-300 hover:scale-[1.03] hover:bg-gold-bright"
-            >
-              Reserva tu clase
-            </a>
-            <a
-              href="#el-deporte"
-              className="rounded-sm border border-cream/40 px-7 py-3.5 text-sm uppercase tracking-[0.16em] text-cream transition-colors duration-300 hover:border-gold hover:text-gold"
-            >
-              Conoce más
-            </a>
-          </div>
-        </Reveal>
-      </div>
-    </section>
   );
 }
 
@@ -139,7 +74,7 @@ export function Playa() {
         />
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
-          <Reveal className="overflow-hidden rounded-md">
+          <Reveal className="overflow-hidden rounded-2xl">
             <img
               src={playaImg}
               alt="Muelle de madera y malecón de Puerto Colombia con kioscos de palma al atardecer"
@@ -156,7 +91,7 @@ export function Playa() {
                 delay={i * 90}
                 className="w-[82%] shrink-0 snap-start md:w-auto"
               >
-                <article className="grain-panel h-full rounded-md border border-border p-5">
+                <article className="grain-panel h-full rounded-2xl border border-border p-5">
                   <d.icon className="size-5 text-gold" />
                   <h3 className="mt-3 text-lg text-cream sm:text-xl">{d.titulo}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d.texto}</p>
@@ -166,7 +101,7 @@ export function Playa() {
           </HScroll>
         </div>
 
-        <Reveal className="mt-10 hidden overflow-hidden rounded-md border border-border lg:block">
+        <Reveal className="mt-10 hidden overflow-hidden rounded-2xl border border-border lg:block">
           <iframe
             title="Mapa del punto de encuentro de Kairos Surf School en Puerto Colombia"
             src={MAP_EMBED}
@@ -209,7 +144,7 @@ export function Deporte() {
             },
           ].map((c, i) => (
             <Reveal key={c.t} delay={i * 100} className="w-[82%] shrink-0 snap-start md:w-auto">
-              <article className="h-full rounded-md border border-border bg-card/70 p-6">
+              <article className="h-full rounded-2xl border border-border bg-card/70 p-6">
                 <h3 className="text-xl text-cream sm:text-2xl">{c.t}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.p}</p>
               </article>
@@ -219,7 +154,7 @@ export function Deporte() {
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           <Reveal>
-            <article className="h-full rounded-md border border-turquoise/30 bg-background/40 p-6">
+            <article className="h-full rounded-2xl border border-turquoise/30 bg-background/40 p-6">
               <p className="eyebrow">Surf</p>
               <h3 className="mt-2 text-2xl text-cream">Para quién es</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -230,7 +165,7 @@ export function Deporte() {
             </article>
           </Reveal>
           <Reveal delay={100}>
-            <article className="h-full rounded-md border border-terracotta/30 bg-background/40 p-6">
+            <article className="h-full rounded-2xl border border-terracotta/30 bg-background/40 p-6">
               <p className="eyebrow">Paddle (SUP)</p>
               <h3 className="mt-2 text-2xl text-cream">Para quién es</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -243,7 +178,7 @@ export function Deporte() {
         </div>
 
         <Reveal delay={150}>
-          <div className="mt-8 rounded-md border border-gold/30 bg-gold/5 p-6 sm:p-8">
+          <div className="mt-8 rounded-2xl border border-gold/30 bg-gold/5 p-6 sm:p-8">
             <h3 className="text-2xl text-cream">
               Qué significa "100% personalizada" en la práctica
             </h3>
@@ -270,6 +205,7 @@ export function Instructores() {
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading
           eyebrow="Instructores"
+          size="display"
           title="Quién te va a enseñar"
           intro="No todos enseñan igual, y eso cambia mucho la primera clase. Lee los tres estilos y elige el que te encaje: puedes pedir instructor al reservar."
         />
@@ -277,10 +213,20 @@ export function Instructores() {
         <HScroll className="mt-10 md:hidden">
           {instructores.map((ins, i) => (
             <Reveal key={ins.id} delay={i * 80} className="w-[85%] shrink-0 snap-start">
-              <article className="flex h-full flex-col rounded-md border border-border bg-card/60 p-5">
-                <div aria-hidden="true" className="h-44 w-full shrink-0 rounded-sm bg-white" />
-                <p className="eyebrow mt-5">{ins.estiloTag}</p>
-                <h3 className="mt-1 text-2xl text-cream">{ins.nombre}</h3>
+              <article className="flex h-full flex-col rounded-2xl border border-border bg-card/60 p-5">
+                <img
+                  src={ins.img}
+                  alt={ins.alt}
+                  width={600}
+                  height={440}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-44 w-full shrink-0 rounded-xl object-cover"
+                />
+                <Chip variant="gold" size="sm" className="mt-5 self-start">
+                  {ins.estiloTag}
+                </Chip>
+                <h3 className="mt-2 text-2xl text-cream">{ins.nombre}</h3>
                 <p className="text-sm text-turquoise">{ins.rol}</p>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{ins.historia}</p>
                 <details className="mt-4 group">
@@ -305,17 +251,27 @@ export function Instructores() {
             <Reveal key={ins.id} delay={i * 80}>
               <article
                 className={cn(
-                  "grid gap-8 rounded-md border border-border bg-card/60 p-7 md:grid-cols-[300px_1fr]",
+                  "grid gap-8 rounded-2xl border border-border bg-card/60 p-7 md:grid-cols-[300px_1fr]",
                   i % 2 === 1 && "md:grid-cols-[1fr_300px]",
                 )}
               >
-                <div
-                  aria-hidden="true"
-                  className={cn("h-full w-full rounded-sm bg-white", i % 2 === 1 && "md:order-2")}
+                <img
+                  src={ins.img}
+                  alt={ins.alt}
+                  width={600}
+                  height={760}
+                  loading="lazy"
+                  decoding="async"
+                  className={cn(
+                    "h-72 w-full rounded-xl object-cover md:h-full",
+                    i % 2 === 1 && "md:order-2",
+                  )}
                 />
                 <div className={cn(i % 2 === 1 && "md:order-1")}>
-                  <p className="eyebrow">{ins.estiloTag}</p>
-                  <h3 className="mt-2 text-3xl text-cream">{ins.nombre}</h3>
+                  <Chip variant="gold" size="sm">
+                    {ins.estiloTag}
+                  </Chip>
+                  <h3 className="mt-3 text-3xl text-cream">{ins.nombre}</h3>
                   <p className="mt-1 text-sm text-turquoise">{ins.rol}</p>
                   <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                     {ins.historia}
@@ -359,7 +315,7 @@ export function Clase() {
 
           <HScroll className="md:grid-cols-1">
             <Reveal className="w-[85%] shrink-0 snap-start md:w-auto">
-              <div className="h-full rounded-md border border-border bg-card/70 p-6">
+              <div className="h-full rounded-2xl border border-border bg-card/70 p-6">
                 <h3 className="text-xl text-cream">Qué incluye</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   Tabla, licra, instructor certificado en primeros auxilios y fotos de la sesión. En
@@ -368,7 +324,7 @@ export function Clase() {
               </div>
             </Reveal>
             <Reveal delay={90} className="w-[85%] shrink-0 snap-start md:w-auto">
-              <div className="h-full rounded-md border border-border bg-card/70 p-6">
+              <div className="h-full rounded-2xl border border-border bg-card/70 p-6">
                 <h3 className="text-xl text-cream">Qué debes traer</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   Vestido de baño puesto, protector solar resistente al agua, toalla, agua y muda
@@ -377,7 +333,7 @@ export function Clase() {
               </div>
             </Reveal>
             <Reveal delay={180} className="w-[85%] shrink-0 snap-start md:w-auto">
-              <div className="h-full rounded-md border border-terracotta/40 bg-terracotta/10 p-6">
+              <div className="h-full rounded-2xl border border-terracotta/40 bg-terracotta/10 p-6">
                 <h3 className="text-xl text-cream">Si el mar no está para clase</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   La decisión la toma el instructor la mañana misma y te avisamos por WhatsApp al
@@ -400,11 +356,12 @@ export function Planes() {
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading
           eyebrow="Planes y precios"
+          size="display"
           title="Compara y decide tú"
           intro="No hay plan recomendado. Cada uno sirve para algo distinto; abajo está lo que incluye, cuánta atención recibes y para quién suele funcionar mejor."
         />
 
-        <Reveal className="mt-12 hidden overflow-x-auto rounded-md border border-border lg:block">
+        <Reveal className="mt-12 hidden overflow-x-auto rounded-2xl border border-border lg:block">
           <table className="w-full border-collapse text-left text-sm">
             <thead>
               <tr className="bg-secondary/40">
@@ -446,13 +403,14 @@ export function Planes() {
                     {p.paraQuien}
                   </td>
                   <td className="border-b border-border px-4 py-5">
-                    <button
-                      type="button"
+                    <PillButton
+                      variant="outline"
+                      size="sm"
                       onClick={() => selectPlan(p.id)}
-                      className="whitespace-nowrap rounded-sm border border-gold px-4 py-2 text-xs uppercase tracking-[0.14em] text-gold transition-colors hover:bg-gold hover:text-primary-foreground"
+                      className="border-gold/60 text-gold hover:bg-gold hover:text-primary-foreground"
                     >
                       Reservar
-                    </button>
+                    </PillButton>
                   </td>
                 </tr>
               ))}
@@ -463,7 +421,7 @@ export function Planes() {
         <HScroll className="mt-10 sm:grid sm:grid-cols-2 sm:gap-5 sm:-mx-0 sm:px-0 sm:pb-0 lg:hidden">
           {planes.map((p, i) => (
             <Reveal key={p.id} delay={i * 70} className="w-[82%] shrink-0 snap-start sm:w-auto">
-              <article className="flex h-full flex-col rounded-md border border-border bg-card/70 p-6">
+              <article className="flex h-full flex-col rounded-2xl border border-border bg-card/70 p-6">
                 <h3 className="text-2xl text-cream">{p.nombre}</h3>
                 <p className="mt-1 text-gold">{p.precio}</p>
                 <dl className="mt-4 space-y-2 text-sm text-muted-foreground">
@@ -484,13 +442,14 @@ export function Planes() {
                     <dd>{p.paraQuien}</dd>
                   </div>
                 </dl>
-                <button
-                  type="button"
+                <PillButton
+                  variant="outline"
+                  size="md"
                   onClick={() => selectPlan(p.id)}
-                  className="mt-6 rounded-sm border border-gold px-4 py-2.5 text-xs uppercase tracking-[0.14em] text-gold transition-colors hover:bg-gold hover:text-primary-foreground"
+                  className="mt-6 border-gold/60 text-gold hover:bg-gold hover:text-primary-foreground"
                 >
                   Reservar este plan
-                </button>
+                </PillButton>
               </article>
             </Reveal>
           ))}
@@ -547,6 +506,10 @@ export function Faq() {
 }
 
 const galeria = [
+  {
+    src: heroDiaImg,
+    alt: "Surfista tomando una ola de espuma en agua turquesa, visto desde el aire",
+  },
   { src: heroImg, alt: "Surfista con tabla turquesa caminando por la orilla al atardecer" },
   { src: playaImg, alt: "Muelle de Puerto Colombia visto desde la madera al atardecer" },
   { src: yogaImg, alt: "Grupo practicando yoga en la arena al amanecer junto a una tabla" },
@@ -559,16 +522,17 @@ export function Galeria() {
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading
           eyebrow="Galería"
+          size="display"
           title="Días de clase"
           intro="Fotos del muelle, las tablas y la gente que pasa por aquí."
         />
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {galeria.map((g, i) => (
             <Reveal key={g.alt} delay={i * 60}>
               <button
                 type="button"
                 onClick={() => setActive(i)}
-                className="group block w-full overflow-hidden rounded-sm"
+                className="group block w-full overflow-hidden rounded-2xl"
               >
                 <img
                   src={g.src}
@@ -594,15 +558,15 @@ export function Galeria() {
           <button
             type="button"
             aria-label="Cerrar galería"
-            className="absolute right-5 top-5 text-cream"
+            className="absolute right-5 top-5 rounded-full border border-border p-2.5 text-cream transition-colors hover:border-gold hover:text-gold"
             onClick={() => setActive(null)}
           >
-            <X className="size-6" />
+            <X className="size-5" />
           </button>
           <img
             src={galeria[active]!.src}
             alt={galeria[active]!.alt}
-            className="max-h-[85vh] max-w-full rounded-sm object-contain"
+            className="max-h-[85vh] max-w-full rounded-2xl object-contain"
           />
         </div>
       ) : null}
@@ -616,7 +580,7 @@ export function Extras() {
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading eyebrow="Actividades extra" title="Más allá de la clase" />
         <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-6">
-          <Reveal className="overflow-hidden rounded-md">
+          <Reveal className="overflow-hidden rounded-2xl">
             <img
               src={yogaImg}
               alt="Sesión de yoga en la arena al amanecer antes de una clase de surf"
@@ -628,7 +592,7 @@ export function Extras() {
           </Reveal>
           <HScroll className="md:grid-cols-1">
             <Reveal className="w-[85%] shrink-0 snap-start md:w-auto">
-              <article className="h-full rounded-md border border-border bg-card/70 p-6">
+              <article className="h-full rounded-2xl border border-border bg-card/70 p-6">
                 <h3 className="text-2xl text-cream">Yoga y Surf</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   Una hora de yoga en la arena al amanecer y después la clase de agua. Grupos de
@@ -638,7 +602,7 @@ export function Extras() {
               </article>
             </Reveal>
             <Reveal delay={90} className="w-[85%] shrink-0 snap-start md:w-auto">
-              <article className="h-full rounded-md border border-border bg-card/70 p-6">
+              <article className="h-full rounded-2xl border border-border bg-card/70 p-6">
                 <h3 className="text-2xl text-cream">Jornadas con fundaciones locales</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   Cada cierto tiempo dictamos clases gratuitas para niños de Puerto Colombia junto a
@@ -648,7 +612,7 @@ export function Extras() {
               </article>
             </Reveal>
             <Reveal delay={180} className="w-[85%] shrink-0 snap-start md:w-auto">
-              <article className="h-full rounded-md border border-border bg-card/70 p-6">
+              <article className="h-full rounded-2xl border border-border bg-card/70 p-6">
                 <h3 className="text-2xl text-cream">Limpiezas de playa</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   Una mañana al mes recogemos basura en el tramo del muelle antes de entrar al agua.
@@ -671,7 +635,7 @@ export function Testimonios() {
         <HScroll className="mt-10 md:grid-cols-2">
           {testimonios.map((t, i) => (
             <Reveal key={t.autor} delay={i * 80} className="w-[85%] shrink-0 snap-start md:w-auto">
-              <figure className="h-full rounded-md border border-border bg-card/60 p-6">
+              <figure className="h-full rounded-2xl border border-border bg-card/60 p-6">
                 <Quote className="size-5 text-gold/70" />
                 <blockquote className="mt-3 text-base leading-relaxed text-cream/90">
                   {t.texto}
@@ -698,7 +662,7 @@ export function Contacto() {
           intro={`Punto de encuentro: ${MEETING_POINT}. Escríbenos y te decimos cómo está el mar hoy.`}
         />
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal className="overflow-hidden rounded-md border border-border">
+          <Reveal className="overflow-hidden rounded-2xl border border-border">
             <iframe
               title="Ubicación de Kairos Surf School en Puerto Colombia, Atlántico"
               src={MAP_EMBED}
@@ -708,7 +672,7 @@ export function Contacto() {
             />
           </Reveal>
           <Reveal delay={100}>
-            <div className="flex h-full flex-col justify-between rounded-md border border-border bg-card/70 p-7">
+            <div className="flex h-full flex-col justify-between rounded-2xl border border-border bg-card/70 p-7">
               <div className="space-y-3 text-sm text-muted-foreground">
                 <p className="flex items-start gap-3">
                   <MapPin className="mt-0.5 size-4 shrink-0 text-gold" />
@@ -719,28 +683,33 @@ export function Contacto() {
                 </p>
               </div>
               <div className="mt-8 flex flex-col gap-3">
-                <a
+                <PillButton
                   href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  variant="solid"
+                  size="lg"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-sm bg-gold px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-primary-foreground transition-transform duration-300 hover:scale-[1.02]"
                 >
                   <MessageCircle className="size-4" /> Escríbenos por WhatsApp
-                </a>
-                <a
+                </PillButton>
+                <PillButton
                   href={INSTAGRAM_URL}
+                  variant="outline"
+                  size="lg"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-sm border border-cream/30 px-6 py-3.5 text-sm uppercase tracking-[0.14em] text-cream transition-colors hover:border-gold hover:text-gold"
+                  className="border-cream/30 text-cream"
                 >
                   <Instagram className="size-4" /> @kairossurf.co
-                </a>
-                <a
+                </PillButton>
+                <PillButton
                   href="#reserva"
-                  className="inline-flex items-center justify-center rounded-sm border border-gold/50 px-6 py-3.5 text-sm uppercase tracking-[0.14em] text-gold transition-colors hover:bg-gold/10"
+                  variant="outline"
+                  size="lg"
+                  className="border-gold/50 text-gold hover:bg-gold/10"
                 >
                   Reserva tu clase
-                </a>
+                </PillButton>
               </div>
             </div>
           </Reveal>
@@ -768,23 +737,21 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">Puerto Colombia, Atlántico · Colombia</p>
           </div>
         </div>
-        <div className="flex items-center gap-5 text-sm text-muted-foreground">
-          <a
+        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <IconCircle
             href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gold"
+            label="Instagram de Kairos Surf School"
+            variant="outline"
           >
-            Instagram
-          </a>
-          <a
+            <Instagram className="size-4" />
+          </IconCircle>
+          <IconCircle
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gold"
+            label="Escribir a Kairos Surf School por WhatsApp"
+            variant="outline"
           >
-            WhatsApp
-          </a>
+            <MessageCircle className="size-4" />
+          </IconCircle>
           <span>© {new Date().getFullYear()}</span>
         </div>
       </div>

@@ -1,3 +1,7 @@
+import instructor1 from "@/assets/instructor-1.jpg";
+import instructor2 from "@/assets/instructor-2.jpg";
+import instructor3 from "@/assets/instructor-3.jpg";
+
 // TODO: reemplazar por el número real de WhatsApp de Kairos Surf School.
 export const WHATSAPP_NUMBER = "573000000000";
 export const INSTAGRAM_URL = "https://instagram.com/kairossurf.co";
@@ -9,6 +13,7 @@ export type Instructor = {
   id: string;
   nombre: string;
   rol: string;
+  img: string;
   alt: string;
   historia: string;
   estilo: string;
@@ -21,6 +26,7 @@ export const instructores: Instructor[] = [
     id: "andres",
     nombre: "Andrés Payares",
     rol: "Instructor de surf · 12 años en el agua",
+    img: instructor1,
     alt: "Andrés Payares, instructor de surf de Kairos, sonriendo frente al mar en Puerto Colombia",
     historia:
       "Creció a dos cuadras del muelle. Aprendió a los 14 con una tabla prestada y sin instructor: se paró bien la tercera tarde y se cayó cientos de veces antes. Enseña desde 2016 porque, según él, nadie debería pasar por esa curva de aprendizaje solo.",
@@ -33,6 +39,7 @@ export const instructores: Instructor[] = [
     id: "mariana",
     nombre: "Mariana Cera",
     rol: "Instructora de surf y paddle · técnica",
+    img: instructor2,
     alt: "Mariana Cera, instructora de surf y paddle de Kairos, junto a una tabla turquesa en la playa",
     historia:
       "Venía de la natación de competencia y llegó al surf a los 19 buscando algo menos cronometrado. Terminó obsesionada con la técnica del remo y del pop-up. Es la que más filma clases: dice que uno no entiende su propio error hasta que se ve.",
@@ -46,6 +53,7 @@ export const instructores: Instructor[] = [
     id: "ramiro",
     nombre: "Ramiro Ortiz",
     rol: "Instructor de paddle y clases familiares",
+    img: instructor3,
     alt: "Ramiro Ortiz, instructor de paddle de Kairos, sentado junto a tablas en la arena al atardecer",
     historia:
       "Pescador durante 20 años antes de dedicarse al paddle. Conoce las corrientes de la zona mejor que cualquier parte meteorológico y es quien decide si un día no está para clase. Empezó enseñando a sus nietos.",
