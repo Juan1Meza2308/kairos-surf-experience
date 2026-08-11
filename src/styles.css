@@ -145,27 +145,63 @@
 }
 
 @utility section-pad {
-  padding-block: 5.5rem;
+  padding-block: 3.5rem;
+
+  @media (min-width: 640px) {
+    padding-block: 5.5rem;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @utility grain-panel {
   background-color: var(--card);
-  background-image: radial-gradient(
-    circle at 20% 0%,
-    oklch(0.38 0.06 186 / 0.35),
-    transparent 60%
-  );
+  background-image: radial-gradient(circle at 20% 0%, oklch(0.38 0.06 186 / 0.35), transparent 60%);
 }
 
 @utility reveal {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(18px);
   transition:
-    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 
   &[data-visible="true"] {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Salta el render de las secciones fuera de pantalla: el navegador no las
+   pinta ni calcula layout hasta que se acercan, lo que hace el scroll mucho
+   más fluido en monitores de alta frecuencia. */
+section.section-pad:not(#galeria) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

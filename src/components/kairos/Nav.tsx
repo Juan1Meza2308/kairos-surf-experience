@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/kairos-logo.jpg.asset.json";
+import logo from "@/assets/kairos-logo.jpg";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -29,15 +29,13 @@ export function Nav() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-        scrolled
-          ? "border-b border-border bg-background/90 backdrop-blur-md"
-          : "border-b border-transparent",
+        scrolled ? "border-b border-border bg-background/95" : "border-b border-transparent",
       )}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <a href="#inicio" className="flex items-center gap-3">
           <img
-            src={logo.url}
+            src={logo}
             alt="Logo de Kairos Surf School"
             width={44}
             height={44}

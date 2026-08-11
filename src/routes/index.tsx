@@ -1,6 +1,6 @@
+import { lazy, Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/kairos/Nav";
-import { Booking } from "@/components/kairos/Booking";
 import {
   Clase,
   Contacto,
@@ -15,6 +15,10 @@ import {
   Playa,
   Testimonios,
 } from "@/components/kairos/Sections";
+
+const Booking = lazy(() =>
+  import("@/components/kairos/Booking").then((m) => ({ default: m.Booking })),
+);
 
 const title = "Clases de surf en Puerto Colombia | Kairos Surf School";
 const description =
@@ -67,7 +71,9 @@ function Index() {
         <Clase />
         <Planes />
         <Faq />
-        <Booking />
+        <Suspense fallback={null}>
+          <Booking />
+        </Suspense>
         <Galeria />
         <Extras />
         <Testimonios />
