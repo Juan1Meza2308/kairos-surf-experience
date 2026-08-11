@@ -556,7 +556,8 @@ export function Galeria() {
           <img
             src={galeria[active]!.src}
             alt={galeria[active]!.alt}
-
+            className="max-h-[85vh] max-w-full rounded-sm object-contain"
+          />
         </div>
       ) : null}
     </section>
