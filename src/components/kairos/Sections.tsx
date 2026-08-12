@@ -22,12 +22,18 @@ import logo from "@/assets/kairos-logo.jpg";
 import { cn } from "@/lib/utils";
 
 /* Carrusel táctil en móvil (scroll-snap) que en pantallas grandes se
-   convierte en grilla. Reduce drásticamente el scroll vertical en celular. */
+   convierte en grilla. Reduce drásticamente el scroll vertical en celular.
+
+   `overflow-y-hidden` no es decorativo: `overflow-x-auto` sólo escribe un eje
+   y, por la spec de CSS Overflow, el otro se computa a `auto`. Eso convertía
+   el carrusel en un scroller vertical que se tragaba el gesto de bajar con el
+   dedo. El `pb-5` cubre además los 18px de `translateY` que aún tienen las
+   tarjetas sin revelar, que son los que generaban ese desplazamiento. */
 function HScroll({ className, children }: { className?: string; children: ReactNode }) {
   return (
     <div
       className={cn(
-        "no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 md:-mx-0 md:grid md:gap-6 md:overflow-visible md:px-0 md:pb-0",
+        "no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden px-5 pb-5 md:-mx-0 md:grid md:gap-6 md:overflow-visible md:px-0 md:pb-0",
         className,
       )}
     >
